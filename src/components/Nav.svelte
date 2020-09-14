@@ -42,4 +42,10 @@
     font-size: 0.625rem;
     content: 'new';
   }
+
+  @media (max-width: 991px) {
+    .nav-group__item a{
+      padding: 1.6em 1.2em;
+    }
+  }
 </style>

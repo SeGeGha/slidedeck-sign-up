@@ -50,9 +50,9 @@
 
   .right-screen img {
     position: absolute;
-    top: 0;
-    left: 5%;
-    transform: scale(0.7);
+    top: 25%;
+    left: 50%;
+    max-width: 1200px;
   }
 
   @media (max-width: 767px) {
