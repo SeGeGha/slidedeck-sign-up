@@ -24,10 +24,9 @@
   <input type="password" placeholder="Password" bind:value={user_info.password}/>
   <input type="password" placeholder="Repeat password"  bind:value={user_info.repeat_password} />
   <button type="submit">Next</button>
-  <label for="remember-user">
-    <input type="checkbox" id="remember-user" />
-    Remember me
-  </label>
+  <input type="checkbox" id="remember-user" />
+  <label for="remember-user">Remember me</label>
+  <a href="#forgot-password">Forgot password</a>
 </form>
 
 <style>
@@ -103,6 +102,7 @@
     width: 12px;
     height: 12px;
     background-color:  #e6e6e6;
+    font-size: 0.8rem;
     border: 1px solid #808080;
     border-radius: 25%;
     content: "";
@@ -110,5 +110,9 @@
 
   input[type=checkbox]:checked + label::after {
     content: "\2713";
+  }
+
+  label + a {
+    margin-left: 25%;
   }
 </style>
