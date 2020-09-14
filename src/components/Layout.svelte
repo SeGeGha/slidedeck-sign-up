@@ -3,55 +3,56 @@
   import Nav from './Nav.svelte';
 </script>
 
-<main>
-  <section class="left-screen">
-    <div class="logo">
-      <h1>slidedeck.<!--
-      --><span>pro</span>
-      </h1>
-    </div>
+<section class="left-screen">
+  <div class="logo">
+    <a href="https://slidedeck.pro/">
+      <img src="https://slidedeck.pro/wp-content/uploads/2020/06/slidedeck-logo-pr.png" alt="Slidedeck logo">
+    </a>
+  </div>
+  <div class="sign-up">
+    <p>Not a member? <strong>Sign up now</strong></p>
     <Form />
-  </section>
-  <section class="right-screen">
-    <Nav />
-  </section>
-</main>
+  </div>
+</section>
+<section class="right-screen">
+  <Nav />
+  <img src="https://slidedeck.pro/wp-content/uploads/2020/06/PRO-slidedeck-screen-v.jpg" alt="Screen PRO slidedeck">
+</section>
 
 <style>
-  main {
-    display: flex;
-  }
-
   .left-screen {
     padding: 3.8em 0;
     flex: 1 1 52%;
   }
 
-  .right-screen {
-    padding-top: 2em;
-    background-color: #fede00;
-    flex: 1 1 48%;
-  }
-
   .logo {
-    margin-left: 5.6em;
+    padding-left: 10%;
   }
 
-  h1 {
-    font-size: 2rem;
-    font-weight: 400;
-    letter-spacing: 0.1rem;
-    cursor: pointer;
+  .logo img {
+    height: 35px;
   }
 
-  h1 > span {
-    color: #ffffff;
-    background-color: #000000;
+  .sign-up {
+    padding-top: 5em;
   }
 
-  span {
-    display: inline-block;
-    padding-bottom: 0.2em;
+  .sign-up p {
+    padding-left: 25%;
+  }
+
+  .right-screen {
+    position: relative;
+    padding-top: 2em;
+    flex: 1 1 48%;
+    overflow: hidden;
+  }
+
+  .right-screen img {
+    position: absolute;
+    top: 0;
+    left: 5%;
+    transform: scale(0.7);
   }
 
   @media (max-width: 767px) {
