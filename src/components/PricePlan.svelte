@@ -1,42 +1,24 @@
 <script>
-  import { DEFAULT_PLAN_CLASS, SELECTED_ELEMENT_CLASS } from '../constants/className';
-  import pricePlansInfo from '../configs/pricePlans';
   import signUpForm from '../models/signUp';
+  import pricePlans from '../models/pricePlans';
   
   export let setNextStep;
 
-  let planDivClassName = new Array(pricePlansInfo.length).fill(DEFAULT_PLAN_CLASS);
-  let choosenPlanID = 0;
-  let choosenPlan = pricePlansInfo[choosenPlanID];
-
-  $: planDivClassName = planDivClassName.map((className, id) => {
-    if (choosenPlanID === id) {
-      return `${className} ${SELECTED_ELEMENT_CLASS}`;
-    };
-
-    return DEFAULT_PLAN_CLASS;
-  });
+  let { info: pricePlansInfo } = pricePlans;
 
   const choosePricePlan = ({target}) => {
     const choosenPlanDiv = target.closest('.group__item');
 
     if (choosenPlanDiv) {
-      choosenPlan = choosenPlanDiv.dataset.name;
+      const choosenPlanName = choosenPlanDiv.dataset.name;
 
-      document.querySelectorAll('.group__item').forEach((item, id) => {
-       
-        if (item.dataset.name === choosenPlan) {
-          choosenPlanID = id;
-        }
-      });
+      pricePlansInfo = pricePlans.setNewPlan(choosenPlanName);
     }
   };
 
   const switchStep = () => {
-    if (choosenPlan) {  
-      signUpForm.setFieldInfo(choosenPlan);
-      setNextStep();
-    }
+    signUpForm.setFieldInfo('choosenPlan');
+    setNextStep();
   };
 </script>
 
@@ -49,8 +31,8 @@
       <span class="url__pointer">&gt;</span>
       <span class="url__link">Complete order</span>
     </div>
-    {#each pricePlansInfo as {name, description, price}, id (name)}
-      <div class={planDivClassName[id]} data-name={name}>
+    {#each pricePlansInfo as {name, description, price, styleClassName}, id (name)}
+      <div class={styleClassName} data-name={name}>
         <div class="item__info">
           <h3>{name}</h3>
           <p>{description}</p>
