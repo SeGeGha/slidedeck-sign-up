@@ -1,28 +1,65 @@
 <script>
-  let user_info = {
-    full_name: null,
-    work_email: null,
-    company: null,
-    password: null,
-  }
+  import formInputInfo from '../configs/formInput';
+  import requestToServer from '../utils/requestToServer';
+  import signUpForm from '../models/signUp';
+  import {INVALID_VALUE} from '../constants/className';
 
-  function on_error(validation_array) {
+  const [contactInfo, passwordInfo] = Object.values(formInputInfo);
+  let errors = [];
 
-  }
+  const onError = (validationArray) => {
+    validationArray.forEach((error) => {
+      errors.push(error.constraints.length);
+    });
 
-  function post(obj, url_to_post, on_error) {
+    errors = errors;
+  };
 
-  }
+  const post = (obj, urlToPost, onError) => {
+    const jsonData = JSON.stringify(obj);
+
+    requestToServer(jsonData, urlToPost)
+      .then((response) => response.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          onError(data);
+        } else {
+          document.location.search = '';
+          document.location.hash = '';
+          document.location.pathname='/home';
+        }
+      })
+      .catch(() => {
+        errors = errors.concat(['Server request error']);
+      });
+  };
+
+  const onSubmit = () => {
+    const formInfo = {};
+
+    document.querySelectorAll('input[required]').forEach(({ name, value }, id) => {
+      formInfo[name] = value;
+    });
+
+    signUpForm.setFieldInfo(formInfo);
+    post(signUpForm.fieldsInfo, 'sss', onError);
+  };
 </script>
 
-<form on:submit|preventDefault={() => post(user_info)}>
+<form on:submit|preventDefault={onSubmit} class="sign-up" autocomplete="off">
   <h2>Create account!</h2>
-  <input type="text" placeholder="Full name" bind:value={user_info.full_name} />
-  <input type="email" placeholder="Work email" bind:value={user_info.work_email}/>
-  <input type="text" placeholder="Company" bind:value={user_info.company}/>
+  <div class="errors">
+    {#each errors as error (error)}
+      <p>{error}</p>
+    {/each}
+  </div>
+  {#each contactInfo as { name, type } (name)}
+    <input {type} placeholder={name} {name} required/>
+  {/each}
   <h3>Create password:</h3>
-  <input type="password" placeholder="Password" bind:value={user_info.password}/>
-  <input type="password" placeholder="Repeat password"  bind:value={user_info.repeat_password} />
+  {#each passwordInfo as { name, type } (name)}
+    <input {type} placeholder={name} {name} required/>
+  {/each}
   <button type="submit">Next</button>
   <input type="checkbox" id="remember-user" />
   <label for="remember-user">Remember me</label>
@@ -30,11 +67,23 @@
 </form>
 
 <style>
-  form {
+  .sign-up {
     width: 100%;
     max-width: 400px;
     padding: 3.3em 2.5em 1.2em;
     margin: 0 auto;
+  }
+
+  .errors {
+    margin: 1em auto;
+    max-width: 400px;
+    background: rgba(255, 0, 0, 0.4);
+    font-weight: 600;
+    text-align: justify;
+  }
+
+  .errors p{
+    padding: 0.5em;
   }
 
   h2 {
@@ -55,12 +104,16 @@
     background-color: #EDEDED;
   }
 
-  input:nth-child(4) {
+  input:nth-child(5) {
     margin-bottom: 2.3em;
   }
 
-  input:nth-child(7) {
+  input:nth-child(8) {
     margin-bottom: 4.7em;
+  }
+
+  .input--invalid {
+    border: 1px solid red;
   }
 
   input:hover {

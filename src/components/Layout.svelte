@@ -1,6 +1,13 @@
 <script>
+  import PricePlan from './PricePlan.svelte';
   import Form from './Form.svelte';
   import Nav from './Nav.svelte';
+
+  let signUpStep = 2;
+
+  const setNextStep = () => {
+    signUpStep += 1;
+  };
 </script>
 
 <section class="left-screen">
@@ -9,10 +16,14 @@
       <img src="https://slidedeck.pro/wp-content/uploads/2020/06/slidedeck-logo-pr.png" alt="Slidedeck logo">
     </a>
   </div>
-  <div class="sign-up">
-    <p>Not a member? <strong>Sign up now</strong></p>
-    <Form />
-  </div>
+  {#if signUpStep === 1}
+    <PricePlan {setNextStep} />
+  {:else}
+    <div class="sign-up">
+      <p>Not a member? <strong>Sign up now</strong></p>
+      <Form />
+    </div>
+  {/if}
 </section>
 <section class="right-screen">
   <Nav />
@@ -37,7 +48,7 @@
     padding-top: 5em;
   }
 
-  .sign-up p {
+  .sign-up > p {
     padding-left: 25%;
   }
 

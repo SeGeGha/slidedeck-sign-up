@@ -1,13 +1,13 @@
 <script>
   import { DEFAULT_PLAN_CLASS, SELECTED_ELEMENT_CLASS } from '../constants/className';
+  import pricePlansInfo from '../configs/pricePlans';
+  import signUpForm from '../models/signUp';
   
-  export let pricePlansInfo;
   export let setNextStep;
-  export let setFieldInfo;
 
   let planDivClassName = new Array(pricePlansInfo.length).fill(DEFAULT_PLAN_CLASS);
-  let choosenPlan;
   let choosenPlanID = 0;
+  let choosenPlan = pricePlansInfo[choosenPlanID];
 
   $: planDivClassName = planDivClassName.map((className, id) => {
     if (choosenPlanID === id) {
@@ -34,7 +34,7 @@
 
   const switchStep = () => {
     if (choosenPlan) {  
-      setFieldInfo({choosenPlan});
+      signUpForm.setFieldInfo(choosenPlan);
       setNextStep();
     }
   };
