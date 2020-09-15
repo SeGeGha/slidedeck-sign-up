@@ -4,11 +4,19 @@
   import signUpForm from '../models/signUp';
   import {INVALID_VALUE} from '../constants/className';
 
-  const [contactInfo, passwordInfo] = Object.values(formInputInfo);
+  let [contactInfo, passwordInfo] = Object.values(formInputInfo);
   let errors = [];
 
   const onError = (validationArray) => {
-    validationArray.forEach((error) => {
+    validationArray.forEach((error) => { 
+      const propId = contactInfo.concat(passwordInfo).findIndex((input) => input.name === error.property);
+      
+      if (propId < contactInfo.length) {
+        contactInfo[propId].className = INVALID_VALUE;
+      } else {
+        passwordInfo[propId - contactInfo.length].className = INVALID_VALUE;
+      }
+
       errors.push(error.constraints.length);
     });
 
@@ -36,7 +44,16 @@
 
   const onSubmit = () => {
     const formInfo = {};
+    const deleteInvalidClass = (input) => {
+      input.className = '';
 
+      return input;
+    };
+
+    errors.length = 0;
+    contactInfo = contactInfo.map(deleteInvalidClass);
+    passwordInfo = passwordInfo.map(deleteInvalidClass);
+  
     document.querySelectorAll('input[required]').forEach(({ name, value }, id) => {
       formInfo[name] = value;
     });
@@ -53,12 +70,12 @@
       <p>{error}</p>
     {/each}
   </div>
-  {#each contactInfo as { name, type } (name)}
-    <input {type} placeholder={name} {name} required/>
+  {#each contactInfo as { name, type, className } (name)}
+    <input class={className} {type} placeholder={name} {name} required/>
   {/each}
   <h3>Create password:</h3>
-  {#each passwordInfo as { name, type } (name)}
-    <input {type} placeholder={name} {name} required/>
+  {#each passwordInfo as { name, type, className } (name)}
+    <input class={className} {type} placeholder={name} {name} required/>
   {/each}
   <button type="submit">Next</button>
   <input type="checkbox" id="remember-user" />

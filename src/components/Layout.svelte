@@ -3,7 +3,7 @@
   import Form from './Form.svelte';
   import Nav from './Nav.svelte';
 
-  let signUpStep = 2;
+  let signUpStep = 1;
 
   const setNextStep = () => {
     signUpStep += 1;
