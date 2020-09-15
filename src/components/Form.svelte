@@ -78,9 +78,11 @@
     <input class={className} {type} placeholder={name} {name} required/>
   {/each}
   <button type="submit">Next</button>
-  <input type="checkbox" id="remember-user" />
-  <label for="remember-user">Remember me</label>
-  <a href="#forgot-password">Forgot password</a>
+  <div class="helpers">
+    <input type="checkbox" id="remember-user" />
+    <label for="remember-user">Remember me</label>
+    <a href="#forgot-password">Forgot password</a>
+  </div>
 </form>
 
 <style>
@@ -182,7 +184,8 @@
     content: "\2713";
   }
 
-  label + a {
-    margin-left: 25%;
+  .helpers {
+    display: flex;
+    justify-content: space-between;
   }
 </style>
