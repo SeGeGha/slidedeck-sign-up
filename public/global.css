@@ -1,0 +1,46 @@
+* {
+  outline: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+html {
+  font-size: 100%;
+  line-height: 1.15;
+}
+
+html, body, main {
+  width: 100%;
+  min-height: 100vh;
+}
+
+body {
+  background: linear-gradient(to right, #fff 52%,  #fede00 48%);
+  color: #000000;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",sans-serif;
+}
+
+main {
+  display: flex;
+  margin: 0 auto;
+  max-width: 1440px;
+}
+
+button, label,
+input[type="checkbox"] {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+@media (max-width: 767px) {
+  body {
+    background: #fff;
+  }
+}
