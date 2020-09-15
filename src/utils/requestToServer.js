@@ -12,7 +12,7 @@ const requestToServer = (data, url) => {
         return this.content;
       },
     };
-    return setTimeout(() => resolve(response), 2000);
+    return setTimeout(() => resolve(response), 1000);
   });
 };
 

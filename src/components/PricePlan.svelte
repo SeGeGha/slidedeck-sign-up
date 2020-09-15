@@ -157,4 +157,10 @@
   h2, h3 {
     font-weight: 600;
   }
+
+  @media (max-width: 767px) {
+    .plan-group {
+      min-width: 300px;
+    }
+  }
 </style>

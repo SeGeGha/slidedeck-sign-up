@@ -38,7 +38,7 @@
     right: 10%;
     padding: 0 0.5em;
     background-color: #32bd7a;
-    color: white;
+    color: #fff;
     font-size: 0.625rem;
     content: 'new';
   }

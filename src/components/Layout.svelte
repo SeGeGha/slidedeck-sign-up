@@ -70,5 +70,10 @@
     .right-screen {
       display: none;
     }
+
+    .sign-up > p {
+      padding-left: 0;
+      text-align: center;
+    }
   }
 </style>

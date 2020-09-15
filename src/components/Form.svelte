@@ -5,7 +5,7 @@
   import {INVALID_VALUE} from '../constants/className';
 
   let [contactInfo, passwordInfo] = Object.values(formInputInfo);
-  let errors = [];
+  let errorsMessage = [];
 
   const onError = (validationArray) => {
     validationArray.forEach((error) => { 
@@ -17,10 +17,10 @@
         passwordInfo[propId - contactInfo.length].className = INVALID_VALUE;
       }
 
-      errors.push(error.constraints.length);
+      errorsMessage.push(error.constraints.length);
     });
 
-    errors = errors;
+    errorsMessage = errorsMessage;
   };
 
   const post = (obj, urlToPost, onError) => {
@@ -38,7 +38,7 @@
         }
       })
       .catch(() => {
-        errors = errors.concat(['Server request error']);
+        errorsMessage = errorsMessage.concat(['Server request error']);
       });
   };
 
@@ -50,24 +50,24 @@
       return input;
     };
 
-    errors.length = 0;
+    errorsMessage.length = 0;
     contactInfo = contactInfo.map(deleteInvalidClass);
     passwordInfo = passwordInfo.map(deleteInvalidClass);
   
-    document.querySelectorAll('input[required]').forEach(({ name, value }, id) => {
+    document.querySelectorAll('input[required]').forEach(({ name, value }) => {
       formInfo[name] = value;
     });
 
     signUpForm.setFieldInfo(formInfo);
-    post(signUpForm.fieldsInfo, 'sss', onError);
+    post(signUpForm.fieldsInfo, 'https://test-url.com', onError);
   };
 </script>
 
-<form on:submit|preventDefault={onSubmit} class="sign-up" autocomplete="off">
+<form on:submit|preventDefault={onSubmit} autocomplete="off">
   <h2>Create account!</h2>
   <div class="errors">
-    {#each errors as error (error)}
-      <p>{error}</p>
+    {#each errorsMessage as message (message)}
+      <p>{message}</p>
     {/each}
   </div>
   {#each contactInfo as { name, type, className } (name)}
@@ -84,7 +84,7 @@
 </form>
 
 <style>
-  .sign-up {
+  form {
     width: 100%;
     max-width: 400px;
     padding: 3.3em 2.5em 1.2em;
