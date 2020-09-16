@@ -1,8 +1,17 @@
+import formInputInfo from '../configs/formInput';
+
 export default {
-  fieldsInfo: {},
+  formSection: {
+    contactInfo: Object.values(formInputInfo)[0],
+    passwordInfo: Object.values(formInputInfo)[1],
+    errorsMessage: [],
+  },
+  formInfo: {},
   setFieldInfo(field) {
     Object.entries(field).forEach(([fieldName, fieldValue]) => {
-      this.fieldsInfo[fieldName] = fieldValue;
+      this.formInfo[fieldName] = fieldValue;
     });
+
+    return this.formInfo;
   },
 };

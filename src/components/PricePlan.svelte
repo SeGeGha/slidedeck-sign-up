@@ -5,19 +5,20 @@
   export let setNextStep;
 
   let { info: pricePlansInfo } = pricePlans;
+  let choosenPlanName = pricePlansInfo[0].name;
 
   const choosePricePlan = ({target}) => {
     const choosenPlanDiv = target.closest('.group__item');
 
     if (choosenPlanDiv) {
-      const choosenPlanName = choosenPlanDiv.dataset.name;
+      choosenPlanName = choosenPlanDiv.dataset.name;
 
       pricePlansInfo = pricePlans.setNewPlan(choosenPlanName);
     }
   };
 
   const switchStep = () => {
-    signUpForm.setFieldInfo('choosenPlan');
+    signUpForm.setFieldInfo({ choosenPlanName });
     setNextStep();
   };
 </script>

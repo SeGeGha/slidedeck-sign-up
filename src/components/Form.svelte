@@ -4,8 +4,7 @@
   import signUpForm from '../models/signUp';
   import {INVALID_VALUE} from '../constants/className';
 
-  let [contactInfo, passwordInfo] = Object.values(formInputInfo);
-  let errorsMessage = [];
+  let { contactInfo, passwordInfo, errorsMessage } = signUpForm.formSection;
 
   const onError = (validationArray) => {
     validationArray.forEach((error) => { 
@@ -43,7 +42,7 @@
   };
 
   const onSubmit = () => {
-    const formInfo = {};
+    let fieldsInfo = {};
     const deleteInvalidClass = (input) => {
       input.className = '';
 
@@ -54,12 +53,12 @@
     contactInfo = contactInfo.map(deleteInvalidClass);
     passwordInfo = passwordInfo.map(deleteInvalidClass);
   
-    document.querySelectorAll('input[required]').forEach(({ name, value }) => {
-      formInfo[name] = value;
+    contactInfo.concat(passwordInfo).forEach((field) => {
+      fieldsInfo[field.name] = field.value;
     });
 
-    signUpForm.setFieldInfo(formInfo);
-    post(signUpForm.fieldsInfo, 'https://test-url.com', onError);
+    const formInfo = signUpForm.setFieldInfo(fieldsInfo);
+    post(formInfo, 'https://test-url.com', onError);
   };
 </script>
 
@@ -70,12 +69,25 @@
       <p>{message}</p>
     {/each}
   </div>
-  {#each contactInfo as { name, type, className } (name)}
-    <input class={className} {type} placeholder={name} {name} required/>
+  {#each contactInfo as { name, type, className }, id (name)}
+    <input 
+      {type} 
+      {name} 
+      class={className} 
+      placeholder={name} 
+      on:input={({ target }) => contactInfo[id].value = target.value} 
+      required
+    />
   {/each}
   <h3>Create password:</h3>
-  {#each passwordInfo as { name, type, className } (name)}
-    <input class={className} {type} placeholder={name} {name} required/>
+  {#each passwordInfo as { name, type, className }, id (name)}
+    <input 
+      {type} 
+      {name} 
+      class={className} 
+      placeholder={name} 
+      on:input={({ target }) => passwordInfo[id].value = target.value} 
+      required/>
   {/each}
   <button type="submit">Next</button>
   <div class="helpers">
